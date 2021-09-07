@@ -1,0 +1,29 @@
+{
+  "name": "libre-video-ssr-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "DEBUG=express:*,app:* nodemon index",
+    "start": "NODE_ENV=production node index"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@hapi/boom": "^9.1.4",
+    "axios": "^0.21.4",
+    "cookie-parser": "^1.4.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "express-session": "^1.17.2",
+    "lodash": "^4.17.21",
+    "passport": "^0.4.1",
+    "passport-http": "^0.3.0",
+    "passport-oauth": "^1.0.0",
+    "passport-twitter": "^1.0.4"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.12"
+  }
+}
