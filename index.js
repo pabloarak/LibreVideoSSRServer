@@ -29,6 +29,12 @@ require('./utils/auth/strategies/google');
 // Twitter Strategy
 require('./utils/auth/strategies/twitter');
 
+// Linkedin Strategy
+//require('./utils/auth/strategies/linkedin');
+
+// Facebook Strategy
+require('./utils/auth/strategies/facebook');
+
 const THIRTY_DAYS_IN_SEC = 2592000000;
 const TWO_HOURS_IN_SEC = 7200000;
 
@@ -213,6 +219,30 @@ app.get(
   { session: false }),
   (req, res, next) => {
     if (!req.user) {
+      next(boom.unauthorized());
+    }
+
+    const { token, ...user } = req.user;
+
+    res.cookie('token', token, {
+      httpOnly: !config.dev,
+      secure: !config.dev
+    });
+
+    res.status(200).json(user);
+  }
+);
+
+app.get(
+  '/auth/facebook', 
+  passport.authorize('facebook')
+);
+
+app.get(
+  '/auth/facebook/callback', 
+  passport.authenticate('facebook', { session: false }), 
+  (req, res, next) => {
+    if(!req.user){
       next(boom.unauthorized());
     }
 
