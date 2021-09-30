@@ -1,4 +1,5 @@
 const express = require('express');
+const helmet = require('helmet');
 const session = require('express-session');
 const passport = require('passport');
 const boom = require('@hapi/boom');
@@ -11,6 +12,7 @@ const app = express();
 
 // body parser
 app.use(express.json());
+app.use(helmet());
 app.use(cookieParser());
 // Required by twitter session
 app.use(session({ secret: config.sessionSecret }));
