@@ -116,12 +116,36 @@ app.get(
   }
 );
 
+app.get(
+  '/user-movies', 
+  async (req, res, next) => {
+    try {
+      const token = req.headers.authorization;
+      const { userId } = req.query;
+
+      const { data, status } = await axios({
+        url: `${config.apiUrl}/api/user-movies/?userId=${userId}`,
+        headers: { Authorization: `Bearer ${token}` },
+        method: 'get'
+      });
+      
+      if(status !== 200){
+        return next(boom.badImplementation());
+      }
+
+      res.status(200).json(data);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
 app.post(
   '/user-movies', 
   async (req, res, next) => {
     try {
       const { body: userMovie } = req;
-      const { token } = req.cookies;
+      const token = req.headers.authorization;
 
       const { data, status } = await axios({
         url: `${config.apiUrl}/api/user-movies`,
@@ -146,7 +170,7 @@ app.delete(
   async (req, res, next) => {
     try {
       const { userMovieId } = req.params;
-      const { token } = req.cookies;
+      const token = req.headers.authorization;
 
       const { data, status } = await axios({
         url: `${config.apiUrl}/api/user-movies/${userMovieId}`,
