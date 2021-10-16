@@ -13,7 +13,6 @@ passport.use(
         scope: ['r_emailaddress', 'r_liteprofile'],
     },
         async (token, tokenSecret, profile, cb) => {
-            console.log(profile);
             const { data, status } = await axios({
                 url: `${config.apiUrl}/api/auth/sign-provider`,
                 method: 'post',
@@ -28,7 +27,6 @@ passport.use(
             if (!data || status !== 200) {
                 return cb(boom.unauthorized());
             }
-            console.log(data);
 
             return cb(null, data);
         }
